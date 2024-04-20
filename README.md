@@ -18,6 +18,7 @@ If needed configure ansible.cfg with local parameters for custom lookup plugin l
 ```
 [defaults]
 lookup_plugins = /home/wilson/Projects/s3-puller/lookup_plugins:/opt/ansible/lookup_plugins
+vault_password_file = /path/to/vault/key
 ```
 
 Variables
