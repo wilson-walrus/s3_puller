@@ -11,7 +11,8 @@ Collections:
 lookup_plugins:
 - [unvault_string.py](https://github.com/redhat-cop/agnosticd/tree/development/ansible/lookup_plugins)
 
-The `unvault_string` lookup will allow you to store the `aws_secret_access_key` as a vaulted value and pull it in as the variable.
+The `unvault_string` lookup will allow you to pull the vaulted `s3_puller_secret_access_key`
+- This requires the lookup_plugin and password of your vault
 ```
 s3_puller_secret_key: "{{ lookup('unvault_string', s3_puller_secret_access_key) }}"
 s3_puller_secret_access_key: !vault |
