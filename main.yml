@@ -22,8 +22,5 @@
 
   tasks:
 
-    - name: Set fact for ansible vault key
-      ansible.builtin.include_tasks: './s3_puller_bitwarden_lookup.yml'
-
     - name: Include s3_puller.yml
       ansible.builtin.include_tasks: './s3_puller.yml'
