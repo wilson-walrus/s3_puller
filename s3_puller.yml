@@ -1,0 +1,42 @@
+---
+- name: List s3 saved output_dir from guid
+  amazon.aws.s3_object:
+    bucket: "{{ s3_puller_bucket }}"
+    region: "{{ s3_puller_region }}"
+    access_key: "{{ s3_puller_access_key }}"
+    secret_key: "{{ s3_puller_secret_key }}"
+    mode: "list"
+    prefix: "{{ guid }}"
+  register: r_s3_objects
+
+- name: List Found s3 Objects
+  debug:
+    var: r_s3_objects.s3_keys[0]
+
+- name: Download output_dir from s3 bucket
+  amazon.aws.s3_object:
+    bucket: "{{ s3_puller_bucket }}"
+    object: "{{ s3_puller_object }}"
+    dest: "{{ s3_puller_dest }}"
+    region: "{{ s3_puller_region }}"
+    access_key: "{{ s3_puller_access_key }}"
+    secret_key: "{{ s3_puller_secret_key }}"
+    mode: "get"
+
+- name: Create dir, unpack, and clean up
+  when: s3_puller_unarchive | default(false) | bool
+  block:
+    - name: Create destination dir at {{ s3_puller_local_dir_dest }}
+      ansible.builtin.file:
+        path: "{{ s3_puller_local_dir_dest }}"
+        state: directory
+        mode: '0775'
+
+    - name: Unpack Tarball to {{ s3_puller_local_dir_dest }}
+      ansible.builtin.command:
+        cmd: tar -xzvf "{{ s3_puller_dest }}" -C "{{ s3_puller_local_dir_dest }}"
+
+    - name: Clean up
+      ansible.builtin.file:
+        path: "{{ s3_puller_dest }}"
+        state: absent

@@ -1,0 +1,26 @@
+---
+- name: Fetch agnosticD output_dir from s3 bucket
+  hosts: localhost
+  gather_facts: False
+  vars:
+
+    ## AWS access vars
+    s3_puller_access_key: "AWS ACCESS KEY"
+    s3_puller_secret_key: "AWS SECRET ACCESS KEY"
+    s3_puller_bucket: "AWS S3 Bucket Name"
+    s3_puller_region: "AWS Region"
+
+    ## Change per new guid and local dir for files
+    guid: "GUID"                                                    ## GUID of deployment, required for quick search of output_dir
+    s3_puller_local_dir: "../output-dir/"                           ## Local destination directory (exists) for output_dir download
+    s3_puller_unarchive: True                                       ## Unpack immediately or leave as .tar.gz in {{ s3_puller_local_dir }}
+    s3_puller_local_dir_dest: "{{ s3_puller_local_dir}}{{ guid }}"  ## If s3_puller_unarchive is true, creates directory and unarchives to location
+
+    ## Static Vars
+    s3_puller_object: "{{ r_s3_objects.s3_keys[0] | default('Key Not Found') }}"
+    s3_puller_dest: "{{ s3_puller_local_dir }}{{ r_s3_objects.s3_keys[0] }}"
+
+  tasks:
+
+    - name: include s3_puller.yml
+      ansible.builtin.include_tasks: './s3_puller.yml'
