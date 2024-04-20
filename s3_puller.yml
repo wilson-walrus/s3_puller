@@ -16,8 +16,8 @@
 - name: Download output_dir from s3 bucket
   amazon.aws.s3_object:
     bucket: "{{ s3_puller_bucket }}"
-    object: "{{ s3_puller_object }}"
-    dest: "{{ s3_puller_dest }}"
+    object: "{{ _s3_puller_object }}"
+    dest: "{{ _s3_puller_dest }}"
     region: "{{ s3_puller_region }}"
     access_key: "{{ s3_puller_access_key }}"
     secret_key: "{{ s3_puller_secret_key }}"

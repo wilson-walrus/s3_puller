@@ -6,7 +6,7 @@
 
     ## AWS access vars
     s3_puller_access_key: "AWS ACCESS KEY"
-    s3_puller_secret_key: "AWS SECRET ACCESS KEY"
+    s3_puller_secret_key: "AWS SECRET ACCESS KEY"                   ## Developers can pull from bitwarden and unvault string
     s3_puller_bucket: "AWS S3 Bucket Name"
     s3_puller_region: "AWS Region"
 
@@ -17,10 +17,13 @@
     s3_puller_local_dir_dest: "{{ s3_puller_local_dir}}{{ guid }}"  ## If s3_puller_unarchive is true, creates directory and unarchives to location
 
     ## Static Vars
-    s3_puller_object: "{{ r_s3_objects.s3_keys[0] | default('Key Not Found') }}"
-    s3_puller_dest: "{{ s3_puller_local_dir }}{{ r_s3_objects.s3_keys[0] }}"
+    _s3_puller_object: "{{ r_s3_objects.s3_keys[0] | default('Key Not Found') }}"
+    _s3_puller_dest: "{{ s3_puller_local_dir }}{{ r_s3_objects.s3_keys[0] }}"
 
   tasks:
 
-    - name: include s3_puller.yml
+    - name: Set fact for ansible vault key
+      ansible.builtin.include_tasks: './s3_puller_bitwarden_lookup.yml'
+
+    - name: Include s3_puller.yml
       ansible.builtin.include_tasks: './s3_puller.yml'
