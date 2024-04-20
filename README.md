@@ -1,15 +1,24 @@
 s3_puller
 =========
 
-This tool pulls content from an aws s3 bucket. It is intended to help developers of [redhat-cop/agnosticd](https://github.com/redhat-cop/agnosticd) pull down the "output_dir" of deployments.
+This tool pulls content from an AWS S3 bucket. It is intended to help developers of [redhat-cop/agnosticd](https://github.com/redhat-cop/agnosticd) pull down the "output_dir" of deployments.
 
 Requirements
 ------------
-
-lookup_plugin: [unvault_string.py](https://github.com/redhat-cop/agnosticd/tree/development/ansible/lookup_plugins)
-
 Collections:
 - amazon.aws
+  
+lookup_plugins: 
+- [unvault_string.py](https://github.com/redhat-cop/agnosticd/tree/development/ansible/lookup_plugins)
+
+ansible.cfg
+-----------
+If needed configure ansible.cfg with local parameters for custom lookup plugin locations
+
+```
+[defaults]
+lookup_plugins = /home/wilson/Projects/s3-puller/lookup_plugins:/opt/ansible/lookup_plugins
+```
 
 Variables
 ---------
@@ -39,3 +48,4 @@ _s3_puller_object: "{{ r_s3_objects.s3_keys[0] | default('Key Not Found') }}"
 
 ## Destination and name of s3 get
 _s3_puller_dest: "{{ s3_puller_local_dir }}{{ r_s3_objects.s3_keys[0] }}"
+```
