@@ -7,8 +7,8 @@ Requirements
 ------------
 Collections:
 - amazon.aws
-  
-lookup_plugins: 
+
+lookup_plugins:
 - [unvault_string.py](https://github.com/redhat-cop/agnosticd/tree/development/ansible/lookup_plugins)
 
 ansible.cfg
@@ -50,3 +50,9 @@ _s3_puller_object: "{{ r_s3_objects.s3_keys[0] | default('Key Not Found') }}"
 ## Destination and name of s3 get
 _s3_puller_dest: "{{ s3_puller_local_dir }}{{ r_s3_objects.s3_keys[0] }}"
 ```
+Author Information
+------------------
+
+Wilson Harris
+Red Hat
+April 19 2024
