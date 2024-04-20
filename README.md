@@ -20,16 +20,17 @@ s3_puller_secret_access_key: !vault |
       12345678912345678912345678912345678912345678912345678912345689798745136847787654
       79461548794613528497615188264948756491854653124875465931645789764513246258497645
 ```
+**Note:** *Ensure you have a method of unlocking the vault, such as a password file*
 
 ansible.cfg
 -----------
-- If needed configure ansible.cfg with local parameters for custom lookup plugin locations.
-- You can also point ansible to your vault password.
+- Configure ansible.cfg with local parameters for custom lookup plugin locations
+- Point ansible to the vault password file
 
 ```
 [defaults]
 lookup_plugins = /home/wilson/Projects/s3-puller/lookup_plugins:/opt/ansible/lookup_plugins
-vault_password_file = /path/to/vault/key
+vault_password_file = /path/to/vault/pass
 ```
 
 Variables
