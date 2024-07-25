@@ -46,13 +46,13 @@ s3_puller_region: "AWS Region"
 ## GUID of deployment, required for quick search of output_dir
 guid: "GUID"
 
-## Local destination directory (exists) for output_dir download
+## Local destination directory (will create if it does not exist) for output_dir download
 s3_puller_local_dir: "../output-dir/"
 
 ## Unpack immediately or leave as .tar.gz in {{ s3_puller_local_dir }}
 s3_puller_unarchive: True
 
-## If s3_puller_unarchive is true, creates directory and unarchives to location
+## If s3_puller_unarchive is true, creates the directory and unarchives to the location
 s3_puller_local_dir_dest: "{{ s3_puller_local_dir}}{{ guid }}"
 
 ## Static Vars
